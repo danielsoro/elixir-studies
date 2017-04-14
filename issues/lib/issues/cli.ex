@@ -7,7 +7,8 @@ defmodule Issues.CLI do
   table of the last _n_ issues in a github project
   """
   def run(argv) do
-    parse_args(argv)
+    argv
+    |> parse_args
   end
 
   @doc """
@@ -21,7 +22,7 @@ defmodule Issues.CLI do
                                     aliases:  [h: :help])
     case parse do
       {[help: true], _, _} -> :help
-      {_, [user, project, count], _} -> {user, project, String.to_integer(count)}
+      {_, [user, project, count], _} -> {user, project, count |> String.to_integer}
       {_, [user, project], _} -> {user, project, @default_count}
       _ -> :help
     end
